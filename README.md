@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CRM System with Two-Factor Authentication
 
 A Django-based Customer Relationship Management (CRM) system with enhanced security features including two-factor authentication.
@@ -43,25 +44,55 @@ auth/
    ```
 
 2. Install dependencies:
+=======
+# Django Authentication Project
+
+This Django project provides a simple authentication system allowing users to sign up and log in. It includes a homepage accessible only to logged-in users.
+
+## Features
+
+- **User Authentication**: Users can sign up for an account and log in securely.
+- **Homepage**: Logged-in users are redirected to the homepage upon successful authentication.
+- **Built-in Forms**: Utilizes Django's built-in forms for user authentication and user creation.
+
+## Installation
+
+1. Clone the repository:
+
+
+
+2. Install dependencies:
+
+>>>>>>> 27477ccc6e2b5d95c50d9db23c16a7c580df1496
    ```bash
    pip install -r requirements.txt
    ```
 
 3. Apply migrations:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27477ccc6e2b5d95c50d9db23c16a7c580df1496
    ```bash
    python manage.py migrate
    ```
 
+<<<<<<< HEAD
 4. Create a superuser:
    ```bash
    python manage.py createsuperuser
    ```
 
 5. Run the development server:
+=======
+4. Run the development server:
+
+>>>>>>> 27477ccc6e2b5d95c50d9db23c16a7c580df1496
    ```bash
    python manage.py runserver
    ```
 
+<<<<<<< HEAD
 ## Configuration
 
 1. Email Settings (in settings.py):
@@ -93,3 +124,23 @@ auth/
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
+=======
+5. Access the application at `http://localhost:8000/`.
+
+## Usage
+
+- Visit the homepage to sign up for an account or log in if you already have one.
+- After successful authentication, you will be redirected to the homepage.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests.
+
+
+
+
+
+
+
+
+>>>>>>> 27477ccc6e2b5d95c50d9db23c16a7c580df1496
