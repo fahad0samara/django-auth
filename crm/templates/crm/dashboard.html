@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container fade-in py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2 mb-0">{% trans "Dashboard" %}</h1>
+        <div>
+            <a href="{% url 'customer_add' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>{% trans "Add Customer" %}
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Stats Cards -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="card dashboard-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle text-muted mb-1">{% trans "Total Customers" %}</h6>
+                            <h2 class="card-title mb-0">{{ customer_count }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card dashboard-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="feature-icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle text-muted mb-1">{% trans "Active Tasks" %}</h6>
+                            <h2 class="card-title mb-0">{{ task_count }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card dashboard-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle text-muted mb-1">{% trans "Total Revenue" %}</h6>
+                            <h2 class="card-title mb-0">${{ total_revenue }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card dashboard-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="feature-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle text-muted mb-1">{% trans "Reports" %}</h6>
+                            <h2 class="card-title mb-0">{{ report_count }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="col-md-6">
+            <div class="card dashboard-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Customer Growth" %}</h5>
+                    <canvas id="customerGrowthChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card dashboard-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Revenue Trend" %}</h5>
+                    <canvas id="revenueTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="col-12">
+            <div class="card dashboard-card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">{% trans "Recent Activity" %}</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Date" %}</th>
+                                    <th>{% trans "Customer" %}</th>
+                                    <th>{% trans "Action" %}</th>
+                                    <th>{% trans "Status" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for activity in recent_activities %}
+                                <tr>
+                                    <td>{{ activity.date }}</td>
+                                    <td>{{ activity.customer }}</td>
+                                    <td>{{ activity.action }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ activity.status_color }}">
+                                            {{ activity.status }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">
+                                        {% trans "No recent activity" %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Customer Growth Chart
+    const customerCtx = document.getElementById('customerGrowthChart').getContext('2d');
+    new Chart(customerCtx, {
+        type: 'line',
+        data: {
+            labels: {{ customer_growth_labels|safe }},
+            datasets: [{
+                label: '{% trans "New Customers" %}',
+                data: {{ customer_growth_data }},
+                borderColor: '#0d6efd',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Revenue Trend Chart
+    const revenueCtx = document.getElementById('revenueTrendChart').getContext('2d');
+    new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ revenue_trend_labels|safe }},
+            datasets: [{
+                label: '{% trans "Revenue" %}',
+                data: {{ revenue_trend_data }},
+                backgroundColor: '#198754'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+});
+</script>
+{% endblock %}

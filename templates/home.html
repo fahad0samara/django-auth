@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Welcome" %} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="container fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4">Welcome to CRM System</h1>
+            <p class="lead mb-5">A powerful customer relationship management system to help you grow your business.</p>
+            
+            {% if not user.is_authenticated %}
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center mb-5">
+                    <a href="{% url 'account_login' %}" class="btn btn-primary btn-lg px-4 me-sm-3">
+                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    </a>
+                    <a href="{% url 'account_signup' %}" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="fas fa-user-plus me-2"></i>Sign Up
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row g-4 py-5">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-users fa-3x text-primary"></i>
+                    </div>
+                    <h3 class="card-title h5">Customer Management</h3>
+                    <p class="card-text">Efficiently manage your customer relationships and keep track of all interactions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-chart-line fa-3x text-primary"></i>
+                    </div>
+                    <h3 class="card-title h5">Analytics & Reports</h3>
+                    <p class="card-text">Get valuable insights with detailed analytics and customizable reports.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-shield-alt fa-3x text-primary"></i>
+                    </div>
+                    <h3 class="card-title h5">Secure & Reliable</h3>
+                    <p class="card-text">Enhanced security with two-factor authentication and data encryption.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,329 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container fade-in py-4">
+    <div class="row">
+        <!-- Settings Navigation -->
+        <div class="col-lg-3 mb-4">
+            <div class="card">
+                <div class="list-group list-group-flush">
+                    <a href="#general" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                        <i class="fas fa-cog me-2"></i>{% trans "General" %}
+                    </a>
+                    <a href="#notifications" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        <i class="fas fa-bell me-2"></i>{% trans "Notifications" %}
+                    </a>
+                    <a href="#privacy" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        <i class="fas fa-user-shield me-2"></i>{% trans "Privacy" %}
+                    </a>
+                    <a href="#appearance" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        <i class="fas fa-paint-brush me-2"></i>{% trans "Appearance" %}
+                    </a>
+                    <a href="#integrations" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        <i class="fas fa-plug me-2"></i>{% trans "Integrations" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Content -->
+        <div class="col-lg-9">
+            <div class="tab-content">
+                <!-- General Settings -->
+                <div class="tab-pane fade show active" id="general">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">{% trans "General Settings" %}</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" id="generalSettingsForm">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label">{% trans "Language" %}</label>
+                                    <select class="form-select" name="language">
+                                        <option value="en" {% if user.profile.language == 'en' %}selected{% endif %}>English</option>
+                                        <option value="es" {% if user.profile.language == 'es' %}selected{% endif %}>Español</option>
+                                        <option value="fr" {% if user.profile.language == 'fr' %}selected{% endif %}>Français</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">{% trans "Time Zone" %}</label>
+                                    <select class="form-select" name="timezone">
+                                        {% for tz in timezones %}
+                                            <option value="{{ tz }}" {% if user.profile.timezone == tz %}selected{% endif %}>{{ tz }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">{% trans "Date Format" %}</label>
+                                    <select class="form-select" name="date_format">
+                                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>{% trans "Save Changes" %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Settings -->
+                <div class="tab-pane fade" id="notifications">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">{% trans "Notification Settings" %}</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" id="notificationSettingsForm">
+                                {% csrf_token %}
+                                <h6 class="mb-3">{% trans "Email Notifications" %}</h6>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="email_tasks" 
+                                               id="emailTasks" {% if user.profile.notify_tasks %}checked{% endif %}>
+                                        <label class="form-check-label" for="emailTasks">
+                                            {% trans "Task Updates" %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="email_messages" 
+                                               id="emailMessages" {% if user.profile.notify_messages %}checked{% endif %}>
+                                        <label class="form-check-label" for="emailMessages">
+                                            {% trans "New Messages" %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="email_reminders" 
+                                               id="emailReminders" {% if user.profile.notify_reminders %}checked{% endif %}>
+                                        <label class="form-check-label" for="emailReminders">
+                                            {% trans "Task Reminders" %}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <h6 class="mb-3">{% trans "Browser Notifications" %}</h6>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="browser_tasks" 
+                                               id="browserTasks" {% if user.profile.browser_tasks %}checked{% endif %}>
+                                        <label class="form-check-label" for="browserTasks">
+                                            {% trans "Task Updates" %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="browser_messages" 
+                                               id="browserMessages" {% if user.profile.browser_messages %}checked{% endif %}>
+                                        <label class="form-check-label" for="browserMessages">
+                                            {% trans "New Messages" %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>{% trans "Save Changes" %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Settings -->
+                <div class="tab-pane fade" id="privacy">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">{% trans "Privacy Settings" %}</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" id="privacySettingsForm">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label">{% trans "Profile Visibility" %}</label>
+                                    <select class="form-select" name="profile_visibility">
+                                        <option value="public">{% trans "Public" %}</option>
+                                        <option value="private">{% trans "Private" %}</option>
+                                        <option value="team">{% trans "Team Only" %}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="activity_visible" 
+                                               id="activityVisible" {% if user.profile.activity_visible %}checked{% endif %}>
+                                        <label class="form-check-label" for="activityVisible">
+                                            {% trans "Show my activity in team feed" %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="show_email" 
+                                               id="showEmail" {% if user.profile.show_email %}checked{% endif %}>
+                                        <label class="form-check-label" for="showEmail">
+                                            {% trans "Show my email to team members" %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>{% trans "Save Changes" %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appearance Settings -->
+                <div class="tab-pane fade" id="appearance">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">{% trans "Appearance Settings" %}</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" id="appearanceSettingsForm">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label">{% trans "Theme" %}</label>
+                                    <select class="form-select" name="theme">
+                                        <option value="light">{% trans "Light" %}</option>
+                                        <option value="dark">{% trans "Dark" %}</option>
+                                        <option value="system">{% trans "System Default" %}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">{% trans "Color Scheme" %}</label>
+                                    <div class="d-flex gap-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="color_scheme" 
+                                                   id="colorBlue" value="blue" checked>
+                                            <label class="form-check-label" for="colorBlue">
+                                                {% trans "Blue" %}
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="color_scheme" 
+                                                   id="colorGreen" value="green">
+                                            <label class="form-check-label" for="colorGreen">
+                                                {% trans "Green" %}
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="color_scheme" 
+                                                   id="colorPurple" value="purple">
+                                            <label class="form-check-label" for="colorPurple">
+                                                {% trans "Purple" %}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="animations" 
+                                               id="animations" checked>
+                                        <label class="form-check-label" for="animations">
+                                            {% trans "Enable animations" %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>{% trans "Save Changes" %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integrations Settings -->
+                <div class="tab-pane fade" id="integrations">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">{% trans "Integrations" %}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="integration-item d-flex align-items-center justify-content-between p-3 border-bottom">
+                                <div class="d-flex align-items-center">
+                                    <i class="fab fa-slack fa-2x text-primary me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">Slack</h6>
+                                        <p class="text-muted mb-0">{% trans "Connect your Slack workspace" %}</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary">{% trans "Connect" %}</button>
+                            </div>
+                            <div class="integration-item d-flex align-items-center justify-content-between p-3 border-bottom">
+                                <div class="d-flex align-items-center">
+                                    <i class="fab fa-google fa-2x text-danger me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">Google Calendar</h6>
+                                        <p class="text-muted mb-0">{% trans "Sync your calendar" %}</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary">{% trans "Connect" %}</button>
+                            </div>
+                            <div class="integration-item d-flex align-items-center justify-content-between p-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="fab fa-github fa-2x text-dark me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">GitHub</h6>
+                                        <p class="text-muted mb-0">{% trans "Connect your GitHub account" %}</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary">{% trans "Connect" %}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle form submissions
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formId = this.id;
+            
+            try {
+                const formData = new FormData(this);
+                const response = await fetch(`{% url "settings_update" %}?section=${formId}`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                });
+                
+                if (response.ok) {
+                    toast.success('{% trans "Success" %}', '{% trans "Settings updated successfully" %}');
+                } else {
+                    throw new Error('Failed to update settings');
+                }
+            } catch (error) {
+                toast.error('{% trans "Error" %}', '{% trans "Failed to update settings" %}');
+            }
+        });
+    });
+    
+    // Handle tab navigation
+    const hash = window.location.hash;
+    if (hash) {
+        const tab = document.querySelector(`[href="${hash}"]`);
+        if (tab) {
+            tab.click();
+        }
+    }
+});
+</script>
+{% endblock %}

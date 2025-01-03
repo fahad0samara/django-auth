@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Privacy Policy" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">{% trans "Privacy Policy" %}</h1>
+    
+    <div class="card">
+        <div class="card-body">
+            <h2 class="h5 mb-4">{% trans "1. Information We Collect" %}</h2>
+            <p>{% trans "We collect information that you provide directly to us, including:" %}</p>
+            <ul>
+                <li>{% trans "Personal information (name, email address)" %}</li>
+                <li>{% trans "Account information" %}</li>
+                <li>{% trans "Usage data" %}</li>
+            </ul>
+
+            <h2 class="h5 mb-4 mt-5">{% trans "2. How We Use Your Information" %}</h2>
+            <p>{% trans "We use the information we collect to:" %}</p>
+            <ul>
+                <li>{% trans "Provide and maintain our services" %}</li>
+                <li>{% trans "Improve user experience" %}</li>
+                <li>{% trans "Send important notifications" %}</li>
+            </ul>
+
+            <h2 class="h5 mb-4 mt-5">{% trans "3. Information Sharing" %}</h2>
+            <p>{% trans "We do not share your personal information with third parties except:" %}</p>
+            <ul>
+                <li>{% trans "With your consent" %}</li>
+                <li>{% trans "To comply with legal obligations" %}</li>
+                <li>{% trans "To protect our rights" %}</li>
+            </ul>
+
+            <h2 class="h5 mb-4 mt-5">{% trans "4. Security" %}</h2>
+            <p>{% trans "We take reasonable measures to protect your personal information from unauthorized access or disclosure." %}</p>
+
+            <h2 class="h5 mb-4 mt-5">{% trans "5. Updates to This Policy" %}</h2>
+            <p>{% trans "We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page." %}</p>
+
+            <h2 class="h5 mb-4 mt-5">{% trans "6. Contact Us" %}</h2>
+            <p>{% trans "If you have any questions about this privacy policy, please contact us at:" %} support@example.com</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

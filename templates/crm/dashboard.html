@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Dashboard" %} | {% trans "CRM System" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">{% trans "Dashboard" %}</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Customers" %}</h5>
+                    <p class="card-text">View and manage your customers.</p>
+                    <a href="{% url 'crm:customers' %}" class="btn btn-primary">{% trans "View Customers" %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Tasks" %}</h5>
+                    <p class="card-text">Manage your tasks and to-dos.</p>
+                    <a href="{% url 'crm:tasks' %}" class="btn btn-primary">{% trans "View Tasks" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

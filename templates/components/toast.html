@@ -1,0 +1,53 @@
+{% load i18n %}
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i id="toastIcon" class="fas me-2"></i>
+            <strong class="me-auto" id="toastTitle"></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastMessage"></div>
+    </div>
+</div>
+
+<script>
+const toast = {
+    show: function(title, message, type = 'success') {
+        const toastEl = document.getElementById('toast');
+        const titleEl = document.getElementById('toastTitle');
+        const messageEl = document.getElementById('toastMessage');
+        const iconEl = document.getElementById('toastIcon');
+        
+        // Set icon and color based on type
+        const icons = {
+            success: 'fa-check-circle text-success',
+            error: 'fa-exclamation-circle text-danger',
+            warning: 'fa-exclamation-triangle text-warning',
+            info: 'fa-info-circle text-info'
+        };
+        
+        iconEl.className = `fas ${icons[type] || icons.info} me-2`;
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        
+        const bsToast = new bootstrap.Toast(toastEl);
+        bsToast.show();
+    },
+    
+    success: function(title, message) {
+        this.show(title, message, 'success');
+    },
+    
+    error: function(title, message) {
+        this.show(title, message, 'error');
+    },
+    
+    warning: function(title, message) {
+        this.show(title, message, 'warning');
+    },
+    
+    info: function(title, message) {
+        this.show(title, message, 'info');
+    }
+};</script>

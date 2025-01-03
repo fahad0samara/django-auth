@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Reports</h1>
+        <a href="{% url 'crm:report_create' %}" class="btn btn-primary">Create Report</a>
+    </div>
+
+    <div class="row">
+        {% for report in reports %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ report.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ report.get_report_type_display }}</h6>
+                    <p class="card-text">
+                        Created: {{ report.created_at|date }}<br>
+                        Last Run: {{ report.last_run|date|default:"Never" }}
+                    </p>
+                    <div class="btn-group">
+                        <a href="{% url 'crm:report_view' report.id %}" class="btn btn-primary">View Report</a>
+                        <a href="{% url 'crm:report_edit' report.id %}" class="btn btn-warning">Edit</a>
+                        <form method="post" action="{% url 'crm:report_run' report.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Run Now</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">No reports created yet.</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
