@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # CRM System with Two-Factor Authentication
 
 A Django-based Customer Relationship Management (CRM) system with enhanced security features including two-factor authentication.
@@ -72,12 +71,10 @@ This Django project provides a simple authentication system allowing users to si
 <<<<<<< HEAD
 =======
 
->>>>>>> 27477ccc6e2b5d95c50d9db23c16a7c580df1496
    ```bash
    python manage.py migrate
    ```
 
-<<<<<<< HEAD
 4. Create a superuser:
    ```bash
    python manage.py createsuperuser
@@ -87,7 +84,6 @@ This Django project provides a simple authentication system allowing users to si
 =======
 4. Run the development server:
 
->>>>>>> 27477ccc6e2b5d95c50d9db23c16a7c580df1496
    ```bash
    python manage.py runserver
    ```
@@ -143,4 +139,3 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 
 
->>>>>>> 27477ccc6e2b5d95c50d9db23c16a7c580df1496
