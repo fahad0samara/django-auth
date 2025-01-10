@@ -1,10 +1,12 @@
 
+from . import views
 from django.urls import path,include
-from .views import auth, home
+
 
 urlpatterns = [
-    path("", home ,name="home"),
-path("signup/", auth,name="auth"),
- path("accounts/",include("django.contrib.auth.urls"))
+    path("", views.home ,name="home"),
+    path('login_user/', views.login, name='login'),
+
+
 
 ]

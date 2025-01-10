@@ -8,8 +8,8 @@ def home(request):
 
 
 # Create your views here.
-def auth(request):
-    if request.method == "post":
+def login(request):
+    if request.method == "POST":
      form = UserCreationForm(request.POST or None)
      if form.is_valid():
       form.save()
