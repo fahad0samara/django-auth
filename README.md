@@ -139,12 +139,6 @@ The application will be available at `http://127.0.0.1:8000/`
 - Rate limiting is implemented on sensitive endpoints
 - Environment variables are used for sensitive data
 
-## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-Fahad - [@your_twitter](https://twitter.com/your_twitter)
 
 Project Link: [https://github.com/fahad0samara/django-auth](https://github.com/fahad0samara/django-auth)
